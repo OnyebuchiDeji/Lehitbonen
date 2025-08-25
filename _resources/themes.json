@@ -1,0 +1,79 @@
+{
+  "Neon Matrix": {
+    "primary_color": "#00FF9F",
+    "secondary_color": "#003B2F",
+    "primary_accent": "#FF00CC",
+    "secondary_accent": "#FFD700",
+    "border_color": "#00FF9F",
+    "background_color": "#000B0A",
+    "text_color": "#00FF9F",
+    "button_color": "#002D24",
+    "button_text_color": "#00FF9F",
+    "input_background": "#001D17"
+  },
+
+  "Digital Eclipse": {
+    "primary_color": "#00BFFF",
+    "secondary_color": "#101020",
+    "primary_accent": "#FF1493",
+    "secondary_accent": "#1E90FF",
+    "border_color": "#0A84FF",
+    "background_color": "#0A0A0F",
+    "text_color": "#E0FFFF",
+    "button_color": "#1C1C3C",
+    "button_text_color": "#00BFFF",
+    "input_background": "#1A1A2E"
+  },
+
+  "Synthwave Night": {
+    "primary_color": "#FF007F",
+    "secondary_color": "#330066",
+    "primary_accent": "#00FFE1",
+    "secondary_accent": "#FFAA00",
+    "border_color": "#FF007F",
+    "background_color": "#1A0025",
+    "text_color": "#FF66CC",
+    "button_color": "#3F005F",
+    "button_text_color": "#FFFFFF",
+    "input_background": "#2A003D"
+  },
+
+  "Ghost Protocol": {
+    "primary_color": "#7CFC00",
+    "secondary_color": "#1A1A1A",
+    "primary_accent": "#FF3CAC",
+    "secondary_accent": "#50E3C2",
+    "border_color": "#4BFFB2",
+    "background_color": "#0D0D0D",
+    "text_color": "#B6FF00",
+    "button_color": "#262626",
+    "button_text_color": "#7CFC00",
+    "input_background": "#111111"
+  },
+
+  "Cybernova": {
+    "primary_color": "#FF6EC7",
+    "secondary_color": "#2E003E",
+    "primary_accent": "#00F0FF",
+    "secondary_accent": "#F9F871",
+    "border_color": "#AA00FF",
+    "background_color": "#12001A",
+    "text_color": "#FCEAFF",
+    "button_color": "#3B004F",
+    "button_text_color": "#FF6EC7",
+    "input_background": "#250033"
+  },
+
+  "Infrared Grid": {
+    "primary_color": "#FF4500",
+    "secondary_color": "#1F1F1F",
+    "primary_accent": "#39FF14",
+    "secondary_accent": "#FFFF00",
+    "border_color": "#FF6347",
+    "background_color": "#0E0E0E",
+    "text_color": "#FF4500",
+    "button_color": "#2B2B2B",
+    "button_text_color": "#FF6347",
+    "input_background": "#191919"
+  }
+}

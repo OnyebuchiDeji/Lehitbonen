@@ -1,0 +1,22 @@
+[b][size=24]Lehitbonen[/size][/b]
+
+
+[b]
+Lehitbonen meaning to contemplate.
+The app was designed as a tool for
+writing GLSL code on mobile.
+Because of the reasoning and a certain
+kind of understanding needed to write this,
+the contemplation required.
+That is why it's so called.
+[/b]
+
+
+[b][size=18]About Author[/size][/b]
+[b]
+Ebenezer Ayo-Metibemu started making
+this app with the goal of using it as
+a form of entertainment for himself 
+and perhaps to anyone who may
+find it useful.
+[/b]

@@ -1,0 +1,751 @@
+#   For Popup Widgets
+#:import Factory kivy.factory.Factory
+
+##################################
+#   OTHER CUSTOM WIDGETS
+##################################
+<ProgramInfoPopup>
+    text_var1: ""
+    text_var2: ""
+    separator_height: "0dp"
+    title_size: "0dp"
+    # title: "Options"
+    font_size: "0dp"
+    auto_dismiss: True
+    size_hint: (0.65, 0.20)
+    pos_hint: {'top': 0.75}
+    # padding: 10
+
+    GridLayout:
+        # orientation: "vertical"
+        rows: 2
+        size: root.width , root.height
+        padding: 5
+        spacing: 15
+
+        Label:
+            font_name: "Agbalumo"
+            markup: True
+            text: root.text_var1
+            font_size: 14
+            color: (0.77, 0.77, 0.77, 1.0)
+            size_hint: (1.0, 0.5)
+            # size: self.parent.size
+            # pos_hint: {'center_y': 0.5}
+            
+        Label:
+            font_name: "Agbalumo"
+            markup: True
+            text: root.text_var2
+            font_size: 14
+            color: (0.77, 0.77, 0.77, 1.0)
+            size_hint: (1.0, 0.5)
+            # pos_hint: {'center_y': 0.5}
+
+<BorderedButton@Button>
+    canvas.before:
+        Color:
+            rgba: 0.21, 0.21, 0.21, 1.0
+        Line:
+            width: 2
+            rectangle: self.x, self.y, self.width, self.height
+    
+<ProgramInfoButtonWidget>
+    title: ""
+    date_created: ""
+    date_last_modified: ""
+    y_val: 0.0
+    width: root.width
+    # pos_hint: {"center_x":0.5, "center_y": 0.5}
+    pos_hint: {'center_y': 0.5}
+    size_hint_y: None
+    min_height: 120
+    height: self.min_height
+    
+    GridLayout:
+        cols: 3
+        size_hint: (1.0, 1.0)
+        height: root.min_height
+        # size_hint_y: None
+        pos_hint_x: None
+        pos_hint_y: None
+        y: root.y_val
+        x: root.width / 2 - self.width / 2 
+        width: root.width * 0.75
+        height: root.height * 0.65
+
+        BorderedButton:
+            markup: True
+            size_hint_x: 0.1
+            size_hint_y: 1.0
+            background_color: (0.67, 0.67, 0.67, 1.0)
+            color: (0.05, 0.05, 0.05, 1.0)
+            background_normal: "None"
+            on_release:
+                Factory.DeleteFilePopup(file_title=root.title).open()
+
+            Image:
+                source: "./_resources/icons/trashbinfill_icon.png"
+                center_x: self.parent.center_x
+                center_y: self.parent.center_y
+
+        BorderedButton:
+            markup: True
+            size_hint_x: 0.8
+            size_hint_y: 1.0
+            font_name: "Baumans"
+            text: f"[b][size=20]{root.title}[/size][/b]"
+            # text: f"{self.height}"
+            background_color: (0.67, 0.67, 0.67, 1.0)
+            color: (0.05, 0.05, 0.05, 1.0)
+            background_normal: "None"
+            font_size: 18
+
+        BorderedButton:
+            size_hint_x: 0.1
+            size_hint_y: 1.0
+            background_color: (0.67, 0.67, 0.67, 1.0)
+            color: (0.05, 0.05, 0.05, 1.0)
+            background_normal: "None"
+            on_release:
+                Factory.ProgramInfoPopup(text_var1=f"Created:\n[b]{root.date_created}[/b]", text_var2=f"Last Modified:\n[b]{root.date_last_modified}[/b]").open()
+
+            Image:
+                source: "./_resources/icons/options.png"
+                center_x: self.parent.center_x
+                center_y: self.parent.center_y
+
+
+
+
+
+<CreateFileButton>
+    size_hint_x: None
+    size_hint_y: None
+    width: self.parent.width * 0.15
+    height: self.parent.width * 0.15
+    pos_hint: {'x':0.83, 'y':0.01}
+    background_normal: ""
+    background_color: 0, 0, 0, 0    #   transparent
+    canvas.before:
+        Color:
+            rgba: 0.21, 0.21, 0.21, 1.0
+        RoundedRectangle:
+            pos: self.pos
+            size: self.size
+            radius: [10]
+    on_release:
+        #   create popup
+        Factory.CreateFilePopup().open()
+
+    Image:
+        source: "./_resources/icons/filepen_icon.png"
+        center_x: self.parent.center_x
+        center_y: self.parent.center_y
+
+<CreateFilePopup@Popup>
+    title: "Enter File Name"
+    font_size: 18
+    auto_dismiss: True
+    size_hint: (0.8, 0.25)
+    pos_hint: {'top': 0.75}
+    # padding: 10
+
+    BoxLayout:
+        orientation: "vertical"
+        size: root.width , root.height
+        # padding: 10
+        spacing: 15
+
+        TextInput:
+            id: id_create_popup_text
+            width: root.width * 0.8
+            height: root.height * 0.15
+            multiline: False
+            background_color: (0.12, 0.12, 0.12, 1.0)
+            foreground_color: (0.88, 0.88, 0.88, 1.0)
+        
+        Button:
+            size_hint_x: None
+            size_hint_y: None
+            width: root.width * 0.35
+            height: root.height * 0.2
+            pos_hint: {'center_x': 0.5}
+
+            text: "Create"
+            font_size: 18
+            on_release:
+                app.root.ids['id_editor_screen'].create_new_file(root.ids['id_create_popup_text'].text)
+                app.root.ids['id_editor_screen'].prepare_editor(app.root.ids['id_editor_screen'].title)
+                app.root.current = "Editor_Screen" 
+                app.root.ids['id_main_screen'].manager.transition.direction = "left"
+                root.dismiss()
+
+
+<DeleteFilePopup>
+    file_title: ""
+    title: "File Delete"
+    font_size: 24
+    auto_dismiss: False
+    size_hint: (0.9, 0.15)
+    pos_hint: {'top': 0.75}
+
+    GridLayout:
+        cols: 3
+        size: root.width , root.height
+        spacing: 7
+
+        Button:
+            size_hint: (0.3, 0.55)
+            font_size: 11
+            text: "Export & Delete"
+            on_release:
+                app.root.ids['id_editor_screen'].export_file(root.file_title)
+                app.root.ids['id_main_screen'].delete_file(root.file_title)
+                app.root.ids['id_main_screen'].oninit()
+                root.dismiss()
+        Button:
+            size_hint: (0.3, 0.55)
+            font_size: 11
+            text: "Delete"
+            on_release:
+                app.root.ids['id_main_screen'].delete_file(root.file_title)
+                app.root.ids['id_main_screen'].oninit()
+                root.dismiss()
+        Button:
+            size_hint: (0.3, 0.55)
+            font_size: 11
+            text: "Cancel"
+            on_release:
+                root.dismiss()
+
+
+<OptionButton>
+    action_list: []
+    background_normal: ""
+    background_color: (0.14, 0.14, 0.14, 1.0)
+    color: (0.97, 0.97, 0.97, 1.0)
+    canvas.before:
+        Color:
+            rgba: 0.21, 0.21, 0.21, 1.0
+        Line:
+            width: 2
+            rectangle: self.x, self.y, self.width, self.height
+
+<IconButton>
+    icon_name_var: ""
+    # background_color: (0.21, 0.21, 0.21, 1.0)
+    # background_normal: "grey"
+    # background_normal: "button.png"
+    # background_down: "button_down.png"
+    # border: 10, 10, 10, 10
+    # foreground_color: (1.0, 0.0, 0.0, 1.0)
+    color: (1.0, .0, .0, 1.0)
+    # text_color: (1.0, 0.0, 0.0, 1.0)
+    Image:
+        source: "./_resources/icons/" + root.icon_name_var
+        center_x: self.parent.center_x
+        center_y: self.parent.center_y
+
+
+
+<OptionPopup>
+    #   a dict of the button names vs the commands as strings.
+    # buttons_dict: {}
+    buttons_name_list: [] 
+    background_normal: "None"
+    # background_color: app.theme_cls.primaryColor
+    opacity: 1
+    separator_height: "0dp"
+    title_size: "18dp"
+    title: "Options"
+    auto_dismiss: True
+    size_hint: (0.45, 0.25) if len(self.buttons_name_list) > 1 else (0.45, 0.15)
+    pos_hint: {'x': .25, 'y': 0.7} if len(self.buttons_name_list) > 1 else {'x':.25, 'y': 0.8}
+    # size_hint: (0.45, 0.25) if (len(self.buttons_name_list) > 1 or len(self.buttons_dict) > 1) else (0.45, 0.15)
+    # pos_hint: {'x': .25, 'y': 0.7} if (len(self.buttons_name_list) > 1 or len(self.buttons_dict) > 1) else {'x':.25, 'y': 0.8}
+
+    BoxLayout:
+        id: id_option_popup_button_container
+        orientation: "vertical"
+
+    
+
+<ActionPopup>
+    title_var: ""
+    button_text_var: ""
+    background_normal: "None"
+    opacity: 1
+    separator_height: "0dp"
+    # seperator_color: (1.0, 0.0, 0.0, 1.0)
+    title_size: "18dp"
+    title: self.title_var
+    font_size: 18
+    auto_dismiss: True
+    size_hint: (0.8, 0.25)
+    pos_hint: {'top': 0.75}
+    
+    BoxLayout:
+        orientation: "vertical"
+        size: root.width , root.height
+        # padding: 10
+        spacing: 15
+
+        TextInput:
+            id: id_action_popup_textinput
+            width: root.width * 0.8
+            height: root.height * 0.15
+            multiline: False
+            background_color: (0.12, 0.12, 0.12, 1.0)
+            foreground_color: (0.88, 0.88, 0.88, 1.0)
+        
+        Button:
+            id: id_action_popup_submit_button
+            size_hint_x: None
+            size_hint_y: None
+            width: root.width * 0.35
+            height: root.height * 0.2
+            pos_hint: {'center_x': 0.5}
+
+            text: (root.button_text_var).split(" ")[0]
+            font_size: 18
+    
+##################################
+
+
+##################################
+#   APP SCREEN MANAGER
+##################################
+<AppScreenManager>
+    id: id_screen_manager
+    current: "Main_Screen"
+    # current: "Editor_Screen"
+    # current: "Render_Screen"
+    rootRef: app.root
+
+    MainScreen:
+        id: id_main_screen
+        name: "Main_Screen"
+
+    EditorScreen:
+        id: id_editor_screen
+        name: "Editor_Screen"
+        
+    RenderScreen:
+        id: id_render_screen
+        name: "Render_Screen"
+
+    AboutScreen:
+        id: id_about_screen
+        name: "About_Screen"
+        about_article: self.read_file()
+
+##################################
+        ##################################
+##################################
+
+
+##################################
+#   MAIN SCREEN
+##################################
+<MainScreen>
+    id: id_main_screen
+    name: "Main_Screen"
+    markup: True
+    size: root.size
+    main_content_height_var: 0.0
+    # mainContentRef: id_main_screen_main_content   #   didn't work using ObjectProperty
+
+    BoxLayout:
+        id: id_main_screen_container
+        orientation: "vertical"
+        size: self.parent.size
+
+        BoxLayout:
+            id: id_main_screen_toolbar
+            orientation: "horizontal"
+            size_hint: (1.0, 0.1)
+            pos_hint: {'x':0, "top":1.0}
+            padding: 5
+            spacing: 0
+
+            Button:
+                size_hint_x: 0.125
+                size_hint_y: None
+                height: self.parent.height * 0.45
+                pos_hint: {'center_y': 0.5}
+                
+                on_release:
+                    root.open_menu_popup()
+
+                Image:
+                    source: "./_resources/icons/bars_icon.png"
+                    center_x: self.parent.center_x
+                    center_y: self.parent.center_y
+
+            Label:
+                text: f"Lehitbonen"
+                font_name: "AtomicAge"
+                font_size: 24
+                color: (0.77, 0.21, 0.77, 1.0)
+                size_hint: (0.85, 1.0)
+                pos_hint: {'center_y': 0.5}
+
+            Button:
+                size_hint_x: 0.125
+                size_hint_y: None
+                height: self.parent.height * 0.45
+                pos_hint: {'center_y': 0.5}
+                on_release:
+                    root.open_settings_popup()
+                Image:
+                    source: "./_resources/icons/settings.png"
+                    center_x: self.parent.center_x
+                    center_y: self.parent.center_y
+
+        GridLayout:
+            cols: 2
+            size_hint: (0.8, 0.05)
+            pos_hint: {'center_x':0.5}
+            spacing: 10
+
+            TextInput:
+                id: id_main_screen_search_textinput
+                font_name: "Agbalumo"
+                size_hint: (0.9, 1.0)
+                multiline: False
+                background_color: (0.21, 0.21, 0.21, 1.0)
+                foreground_color: (0.77, 0.77, 0.77, 1.0)
+                on_text:
+                    root.oninit() if not self.text else print("Searched")
+            
+            Button:
+                size_hint: (0.1, 1.0)
+                background_normal: ""
+                background_color: (0.21, 0.21, 0.21, 1.0)
+                foreground_color: (0.77, 0.77, 0.77, 1.0)
+                on_release:
+                    root.determine_mid_semantic_method()
+                    root.oninit()
+
+                Image:
+                    source: "./_resources/icons/search_icon.png"
+                    center_x: self.parent.center_x
+                    center_y: self.parent.center_y
+
+        ScrollView:
+            do_scroll_x: False
+            do_scroll_y: True
+            size_hint_x: 1.0
+            pos_hint: {"y":0.8}
+            # size_hint: (1, None)
+            spacing: "5dp"
+            # adaptive_height: True
+
+            BoxLayout:
+                id: id_main_screen_main_content
+                orientation: "vertical"
+                # direction: "tb-lr"  #   top to bottom, left to right
+                # rows: len(self.children)
+                # adaptive_height: True
+                height: root.main_content_height_var
+                size_hint_x: 1.0
+                size_hint_y: None
+                pos_hint: {'x':0.0, 'top':1.0}
+                # spacing: 10
+                # padding: 10
+
+                # Label:
+                #     text: f"HERE"
+                #     color: (0.0, 0.0, 0.0, 1.0)
+                #     font_size: 18
+
+                # background_color: (1.0, 0.0, 0.0, 1.0)
+
+                # Button:
+                #     size_hint_x: 0.15
+                #     size_hint_y: None
+                #     height: self.parent.height * 0.45
+                #     pos_hint: {'center_y': 0.5}
+                #     text: "Here"
+                #     on_release:
+                #         app.root.current = "Editor_Screen" 
+                #         root.manager.transition.direction = "left"
+
+    CreateFileButton:
+
+
+##################################
+            ##################################
+##################################
+
+
+##################################
+#   EDITOR SCREEN
+##################################
+<EditorScreen>
+    id: id_editor_screen
+    name: "Editor_Screen"
+    title: ""
+    action_popup_output: ""
+    # code: ""
+
+    BoxLayout:
+        orientation: "vertical"
+        size: self.parent.width, self.parent.height
+        padding: 0
+        spacing: 0
+
+        TopHeaderbar:    
+            orientation: "horizontal"
+            size_hint: (1.0, 0.05)
+            pos_hint: {'x':0, "top":1.0}
+            padding: 0
+            spacing: 0
+            rows: 2
+            id: w_topnavtoolbar
+            padding: 5
+
+            Button:
+                size_hint_x: 0.1
+                size_hint_y: None
+                height: self.parent.height * 0.65
+                pos_hint: {'center_y': 0.5}
+                on_release:
+                    root.save_file()
+                    app.root.ids['id_main_screen'].oninit()
+                    app.root.current = "Main_Screen" 
+                    root.manager.transition.direction = "right"
+
+                Image:
+                    id: toptoolbar_image
+                    source: "./_resources/icons/backicon.png"
+                    center_x: self.parent.center_x
+                    center_y: self.parent.center_y
+
+            Label:
+                text: root.title
+                font_name: "AtomicAge"
+                font_size: 24
+                color: (0.77, 0.21, 0.77, 1.0)
+                size_hint: (0.8, 1.0)
+
+            Button:
+                size_hint_x: 0.1
+                size_hint_y: None
+                height: self.parent.height * 0.65
+                pos_hint: {'center_y': 0.5}
+                on_release:
+                    # Factory.OptionPopup(buttons_name_list=[], buttons_dict={"Rename":["print(app.root.ids['id_main_screen'])", "print('Rename')"], "Save":["print('Save')"], "Save As":["print('Save As')"]}).open()
+                    root.open_options_popup()
+                    
+                Image:
+                    source: "./_resources/icons/options.png"
+                    center_x: self.parent.center_x
+                    center_y: self.parent.center_y
+
+       
+        RenderScreenToolbar:
+            id: w_render_screen_toolbar
+            cols: 3
+            size_hint: (1.0, 0.035)
+            pos_hint: {'x':0, 'top':0.8}
+            spacing: 5
+            padding: 2.5
+
+            Button:
+                height: self.parent.height * 0.45
+                pos_hint: {'center_y': 0.5}
+                on_release:
+                    root.save_file()
+                    #   call the Render Screen's render function
+                    app.root.ids['id_render_screen'].render(root.title)
+                    app.root.current = "Render_Screen" 
+                    root.manager.transition.direction = "left"
+
+                Image:
+                    source: "./_resources/icons/play.png"
+                    center_x: self.parent.center_x
+                    center_y: self.parent.center_y
+
+            Button:
+                height: self.parent.height * 0.45
+                pos_hint: {'center_y': 0.5}
+                on_release:
+                    root.save_file()
+                    root.open_video_save_popup()
+                    app.root.current = "Render_Screen" 
+                    root.manager.transition.direction = "left"
+
+                Image:
+                    source: "./_resources/icons/download_video.png"
+                    center_x: self.parent.center_x
+                    center_y: self.parent.center_y
+
+            Button:
+                height: self.parent.height * 0.45
+                pos_hint: {'center_y': 0.5}
+                on_release:
+                    #   export the file as .glsl file
+                    root.save_file()
+                    root.export_file()
+                    # app.root.current = "Render_Screen" 
+                    # root.manager.transition.direction = "left"
+
+                Image:
+                    source: "./_resources/icons/export_icon.png"
+                    center_x: self.parent.center_x
+                    center_y: self.parent.center_y
+
+        BoxLayout:
+            orientation: "vertical"
+            id: id_text_area_container
+            size_hint: (1.0, 0.7)
+            pos_hint: {'x':0, 'top':.43}
+            spacing: 0
+            padding: 0
+
+            CodeArea:
+                id: id_code_area
+                font_name: "Baumans"
+                # text: '\n'.join([f"Line {i}" for i in range(100)])
+                text: ""
+                size_hint: (1.0, 1.0)
+                #pos_hint: {'x':0, 'y':0.0}
+                multiline: True
+
+                scroll_type: ['bars', 'content']    #   show bar + allow scrolling with content gestures
+                #   bar_width: 100 #    the scrollbar still wasn't showing for some reason
+
+                #   scrollbar colors and fade implementatin
+                bar_color: 1.0, 0.0, 0.0, 1.0         #   visible color while scrolling
+                bar_inactive_color: 1, 0, 0, 0  #   fully transparent when inactive
+
+                background_color: (0.07, 0.07, 0.07, 1) #   dark background
+                foreground_color: (0.97, 0.97, 0.97, 1.0)  #   white text
+                on_text:
+                    self.apply_code_modifications()
+
+
+            CodingToolbar:
+                id: w_bottom_toolbar
+                size_hint: (1.0, 0.05)
+                #pos_hint: {'x':0, 'y':.75}
+                padding: 5
+
+                Label:
+                    pos_hint: {'center_x': 0.5, 'center_y':0.1}
+                    text: "Coding Toolbar"
+                    font_size: 18
+                    color: (0.0, 0.0, 1.0, 1.0)
+                    size: self.parent.size
+##################################
+            ##################################
+##################################
+
+
+##################################
+#   RENDER SCREEN
+##################################
+
+<OpenglRender>
+    id: id_opengl_render
+    size_hint: (1.0, 0.5)
+    pos_hint: {'x':0, 'center_y':0.5} 
+
+<RenderScreen>
+    name: "Render_Screen"
+    id: id_render_screen
+    gap: 10
+    button_width: self.width * 0.15
+    button_height: self.height * 0.15 * (self.width/self.height)
+
+    FloatLayout:
+        id: id_render_screen_container
+        orientation: 'vertical'
+        size: self.parent.size
+        padding: 0
+        spacing: 0
+
+
+        Button:
+            # height: .45
+            size_hint: (0.15, 0.15 * (root.width/root.height))
+            # pos_hint: {'x':0.05, 'y': 0.1}
+            pos_hint: {'x': ((root.width / 2.0) - (root.gap + root.button_width * (3.0 / 2.0))) / root.width, 'y': 0.1}
+
+            on_release:
+                #   Remove the render object from memory
+                root.release_render_object()
+                app.root.current = "Editor_Screen" 
+                root.manager.transition.direction = "right"
+
+            Image:
+                source: "./_resources/icons/close_icon.png"
+                center_x: self.parent.center_x
+                center_y: self.parent.center_y
+
+        Button:
+            # height: self.parent.height * 0.45
+            size_hint: (0.15, 0.15 * (root.width/root.height))
+            # width: root.button_width
+            # height: root.button_height
+            # pos_hint: {'x': 0.35, 'y': 0.1}
+            pos_hint: {'x':((root.width / 2.0) - (root.button_width / 2.0)) / root.width, 'y': 0.1}
+            # text: f"{root.height}"
+            on_release:
+                root.save_snapshot()
+
+            Image:
+                source: "./_resources/icons/saveimagefill_icon.png"
+                center_x: self.parent.center_x
+                center_y: self.parent.center_y
+
+        Button:
+            # height: self.parent.height * 0.45
+            size_hint: (0.15, 0.15 * (root.width/root.height))
+            # width: root.button_width
+            # height: root.button_height
+            # pos_hint: {'x': 0.65, 'y': 0.1}
+            pos_hint: {'x': ((root.width / 2.0) + (root.gap + root.button_width / 2.0)) / root.width, 'y': 0.1}
+            on_release:
+                root.maximize_window()
+
+            Image:
+                source: "./_resources/icons/window_icon.png"
+                center_x: self.parent.center_x
+                center_y: self.parent.center_y
+
+        # OpenglRender:
+
+<AboutScreen>
+    name: "About_Screen"
+    id: id_about_screen
+    about_article: ""
+    # gap: 10
+    padding: 0
+    spacing: 0
+    color: (0.97, 0.97, 0.97, 1.0)
+
+    Label:
+        font_name: "Offside"
+        text: "About"
+        size_hint: (1.0, 0.05)
+        pos_hint: {'top': 1.0}
+        font_size: 18
+
+
+    Label:
+        font_name: "Offside"
+        id: id_about_screen_label
+        markup: True
+        multiline: False
+        text: root.about_article
+        color: (0.97, 0.97, 0.97, 1.0)
+        font_size: 15
+        size_hint: (1.0, 0.95)
+        pos_hint: {'top': 1.0}
+
+##################################
+            ##################################
+##################################
