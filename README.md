@@ -12,10 +12,10 @@ any ideas I may come up with. Because of the contemplation that goes behind unde
 GLSL to create patterns, I named the app Lehitbonen.
 
 ###	Screenshots
-![1](./_screenshots/scrn_shot1.png)
-![2](./_screenshots/scrn_shot2.png)
-![3](./_screenshots/scrn_shot5.png)
-![4](./_screenshots/scrn_shot3.png)
-![5](./_screenshots/scrn_shot4.png)
-![6](./_screenshots/scrn_shot7.png)
-![7](./_screenshots/scrn_shot14.png)
+![1](./_screenshots/scrn_shot_1.png)
+![2](./_screenshots/scrn_shot_2.png)
+![3](./_screenshots/scrn_shot_5.png)
+![4](./_screenshots/scrn_shot_3.png)
+![5](./_screenshots/scrn_shot_4.png)
+![6](./_screenshots/scrn_shot_7.png)
+![7](./_screenshots/scrn_shot_14.png)
